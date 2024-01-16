@@ -1,16 +1,10 @@
-import { Button, Paragraph, YStack } from '@my/ui'
-import { ChevronLeft } from '@tamagui/lucide-icons'
-import React from 'react'
-import { createParam } from 'solito'
-import { useLink } from 'solito/link'
-
-const { useParam } = createParam<{ id: string }>()
+import { Button, Paragraph, YStack } from '@my/ui';
+import { ChevronLeft } from '@tamagui/lucide-icons';
+import { useLink, useParams } from 'solito/navigation';
 
 export function UserDetailScreen() {
-  const [id] = useParam('id')
-  const link = useLink({
-    href: '/',
-  })
+  const { id } = useParams<{ id: string }>();
+  const link = useLink({ href: '/' });
 
   return (
     <YStack f={1} jc="center" ai="center" space>
@@ -19,5 +13,5 @@ export function UserDetailScreen() {
         Go Home
       </Button>
     </YStack>
-  )
+  );
 }

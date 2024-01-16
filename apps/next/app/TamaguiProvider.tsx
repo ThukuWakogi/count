@@ -1,20 +1,26 @@
-'use client'
+'use client';
 
-import '@tamagui/core/reset.css'
-import '@tamagui/polyfill-dev'
+import '@tamagui/core/reset.css';
+import '@tamagui/polyfill-dev';
 
-import { NextThemeProvider, useRootTheme } from '@tamagui/next-theme'
-import { useServerInsertedHTML } from 'next/navigation'
-import React from 'react'
-import { StyleSheet } from 'react-native'
-import { config, TamaguiProvider as TamaguiProviderOG } from '@my/ui'
+import {
+  CustomToast,
+  TamaguiProvider as TamaguiProviderOG,
+  ToastProvider,
+  ToastViewport,
+  config,
+} from '@my/ui';
+import { NextThemeProvider, useRootTheme } from '@tamagui/next-theme';
+import { useServerInsertedHTML } from 'next/navigation';
+import React from 'react';
+import { StyleSheet } from 'react-native';
 
 export const TamaguiProvider = ({ children }: { children: React.ReactNode }) => {
-  const [theme, setTheme] = useRootTheme()
+  const [theme, setTheme] = useRootTheme();
 
   useServerInsertedHTML(() => {
     // @ts-ignore
-    const rnwStyle = StyleSheet.getSheet()
+    const rnwStyle = StyleSheet.getSheet();
     return (
       <>
         <style dangerouslySetInnerHTML={{ __html: rnwStyle.textContent }} id={rnwStyle.id} />
@@ -28,19 +34,23 @@ export const TamaguiProvider = ({ children }: { children: React.ReactNode }) => 
           }}
         />
       </>
-    )
-  })
+    );
+  });
 
   return (
     <NextThemeProvider
       skipNextHead
       onChangeTheme={(next) => {
-        setTheme(next as any)
+        setTheme(next as any);
       }}
     >
       <TamaguiProviderOG config={config} themeClassNameOnRoot defaultTheme={theme}>
-        {children}
+        <ToastProvider swipeDirection="horizontal" duration={6000} native={['mobile']}>
+          {children}
+          <CustomToast />
+          <ToastViewport left={0} right={0} top={10} />
+        </ToastProvider>
       </TamaguiProviderOG>
     </NextThemeProvider>
-  )
-}
+  );
+};
