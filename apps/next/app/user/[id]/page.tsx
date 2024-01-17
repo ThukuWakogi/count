@@ -1,5 +1,3 @@
-'use client'
+'use client';
 
-import { UserDetailScreen } from 'app/features/user/detail-screen'
-
-export default UserDetailScreen
+export { UserDetailScreen as default } from 'app/features/user/detail-screen';
